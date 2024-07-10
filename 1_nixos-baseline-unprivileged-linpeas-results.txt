@@ -1,0 +1,896 @@
+# bash linpeas.sh
+            \e[48;5;108m     \e[48;5;59m \e[48;5;71m \e[48;5;77m       \e[48;5;22m \e[48;5;108m   \e[48;5;114m \e[48;5;59m \e[49m
+            \e[48;5;108m  \e[48;5;71m \e[48;5;22m \e[48;5;113m \e[48;5;71m \e[48;5;94m \e[48;5;214m  \e[48;5;58m \e[48;5;214m    \e[48;5;100m \e[48;5;71m  \e[48;5;16m \e[48;5;108m  \e[49m
+            \e[48;5;65m \e[48;5;16m \e[48;5;22m \e[48;5;214m      \e[48;5;16m \e[48;5;214m        \e[48;5;65m  \e[49m
+            \e[48;5;65m \e[48;5;214m       \e[48;5;16m \e[48;5;214m \e[48;5;16m \e[48;5;214m       \e[48;5;136m \e[48;5;65m \e[49m
+            \e[48;5;23m \e[48;5;214m          \e[48;5;178m \e[48;5;214m       \e[48;5;65m \e[49m
+            \e[48;5;16m \e[48;5;214m         \e[48;5;136m \e[48;5;94m   \e[48;5;136m \e[48;5;214m    \e[48;5;65m \e[49m
+            \e[48;5;58m \e[48;5;214m  \e[48;5;172m \e[48;5;64m \e[48;5;77m             \e[48;5;71m \e[48;5;65m \e[49m
+            \e[48;5;16m \e[48;5;71m \e[48;5;77m  \e[48;5;71m \e[48;5;77m         \e[48;5;71m \e[48;5;77m   \e[48;5;65m  \e[49m
+            \e[48;5;59m \e[48;5;71m \e[48;5;77m \e[48;5;77m \e[48;5;16m \e[48;5;77m         \e[48;5;16m \e[48;5;77m   \e[48;5;65m  \e[49m
+            \e[48;5;65m  \e[48;5;77m      \e[48;5;71m \e[48;5;16m \e[48;5;77m    \e[48;5;113m \e[48;5;77m   \e[48;5;65m  \e[49m
+            \e[48;5;65m \e[48;5;16m \e[48;5;77m  \e[48;5;150m \e[48;5;113m \e[48;5;77m        \e[48;5;150m \e[48;5;113m \e[48;5;77m \e[48;5;65m \e[48;5;59m \e[48;5;65m \e[49m
+            \e[48;5;16m \e[48;5;65m \e[48;5;71m \e[48;5;77m             \e[48;5;71m \e[48;5;22m \e[48;5;65m  \e[49m
+            \e[48;5;108m  \e[48;5;107m \e[48;5;59m \e[48;5;77m           \e[48;5;16m \e[48;5;114m \e[48;5;108m   \e[49m
+
+    /---------------------------------------------------------------------------------\
+    |                             Do you like PEASS?                                  |
+    |---------------------------------------------------------------------------------|
+    |         Follow on Twitter         :     @hacktricks_live                        |
+    |         Respect on HTB            :     SirBroccoli                             |
+    |---------------------------------------------------------------------------------|
+    |                                 Thank you!                                      |
+    \---------------------------------------------------------------------------------/
+          linpeas-ng by github.com/PEASS-ng
+
+ADVISORY: This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own computers and/or with the computer owner's permission.
+
+Linux Privesc Checklist: https://book.hacktricks.xyz/linux-hardening/linux-privilege-escalation-checklist
+ LEGEND:
+  RED/YELLOW: 95% a PE vector
+  RED: You should take a look to it
+  LightCyan: Users with console
+  Blue: Users without console & mounted devs
+  Green: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
+  LightMagenta: Your username
+
+ Starting linpeas. Caching Writable Folders...
+
+                               ╔═══════════════════╗
+═══════════════════════════════╣ Basic information ╠═══════════════════════════════
+                               ╚═══════════════════╝
+OS: Linux version 6.6.36 (nixbld@localhost) (gcc (GCC) 13.2.0, GNU ld (GNU Binutils) 2.41) #1-NixOS SMP PREEMPT_DYNAMIC Thu Jun 27 11:49:15 UTC 2024
+User & Groups: uid=1002(test) gid=100(users) groups=100(users)
+Hostname: nixos
+Writable folder: /dev/shm
+[+] /run/current-system/sw/bin/ping is available for network discovery (linpeas can discover hosts, learn more with -h)
+[+] /run/current-system/sw/bin/nc is available for network discovery & port scanning (linpeas can discover hosts and scan ports, learn more with -h)
+
+
+
+Caching directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . DONE
+
+                              ╔════════════════════╗
+══════════════════════════════╣ System Information ╠══════════════════════════════
+                              ╚════════════════════╝
+╔══════════╣ Operative system
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#kernel-exploits
+Linux version 6.6.36 (nixbld@localhost) (gcc (GCC) 13.2.0, GNU ld (GNU Binutils) 2.41) #1-NixOS SMP PREEMPT_DYNAMIC Thu Jun 27 11:49:15 UTC 2024
+lsb_release Not Found
+
+╔══════════╣ Sudo version
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-version
+Sudo version 1.9.15p5
+
+
+╔══════════╣ PATH
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#writable-path-abuses
+/run/wrappers/bin:/home/test/.nix-profile/bin:/nix/profile/bin:/home/test/.local/state/nix/profile/bin:/etc/profiles/per-user/test/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin
+
+╔══════════╣ Date & uptime
+Wed Jul 10 12:05:49 PM UTC 2024
+ 12:05:49  up   6:03,  2 users,  load average: 0.03, 0.31, 0.39
+
+╔══════════╣ Any sd*/disk* disk in /dev? (limit 20)
+disk
+
+╔══════════╣ Unmounted file-system?
+╚ Check if you can mount umounted devices
+grep: warning: stray \ before #
+
+/dev/disk/by-uuid/61ddefcd-d4af-4b77-accb-1362865cffa8 / ext4 x-initrd.mount 0 1
+/dev/disk/by-uuid/2DE7-2C24 /boot vfat fmask=0022,dmask=0022 0 2
+/dev/disk/by-uuid/4a4a62fc-1de2-423a-a645-cbf5e06d20ce /home ext4 defaults 0 2
+/dev/disk/by-uuid/361d0191-a4a8-473b-8a9e-ba46b6ad41f0 /var ext4 x-initrd.mount 0 2
+
+
+
+
+╔══════════╣ Environment
+╚ Any private information inside environment variables?
+SHELL=/run/current-system/sw/bin/bash
+__ETC_PROFILE_DONE=1
+XDG_CONFIG_DIRS=/etc/xdg:/home/test/.nix-profile/etc/xdg:/nix/profile/etc/xdg:/home/test/.local/state/nix/profile/etc/xdg:/etc/profiles/per-user/test/etc/xdg:/nix/var/nix/profiles/default/etc/xdg:/run/current-system/sw/etc/xdg
+SUDO_GID=100
+HISTSIZE=0
+XCURSOR_PATH=/home/test/.icons:/home/test/.local/share/icons:/home/test/.nix-profile/share/icons:/home/test/.nix-profile/share/pixmaps:/nix/profile/share/icons:/nix/profile/share/pixmaps:/home/test/.local/state/nix/profile/share/icons:/home/test/.local/state/nix/profile/share/pixmaps:/etc/profiles/per-user/test/share/icons:/etc/profiles/per-user/test/share/pixmaps:/nix/var/nix/profiles/default/share/icons:/nix/var/nix/profiles/default/share/pixmaps:/run/current-system/sw/share/icons:/run/current-system/sw/share/pixmaps
+SUDO_COMMAND=/run/current-system/sw/bin/bash
+SUDO_USER=worker
+NO_AT_BRIDGE=1
+EDITOR=nano
+PWD=/tmp
+NIX_PROFILES=/run/current-system/sw /nix/var/nix/profiles/default /etc/profiles/per-user/root /root/.local/state/nix/profile /nix/profile /root/.nix-profile
+LOGNAME=test
+NIX_PATH=nixpkgs=flake:nixpkgs:/nix/var/nix/profiles/per-user/root/channels
+NIXPKGS_CONFIG=/etc/nix/nixpkgs-config.nix
+HOME=/home/test
+SSH_ASKPASS=
+LANG=en_US.UTF-8
+HISTFILE=/dev/null
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.7z=01;31:*.ace=01;31:*.alz=01;31:*.apk=01;31:*.arc=01;31:*.arj=01;31:*.bz=01;31:*.bz2=01;31:*.cab=01;31:*.cpio=01;31:*.crate=01;31:*.deb=01;31:*.drpm=01;31:*.dwm=01;31:*.dz=01;31:*.ear=01;31:*.egg=01;31:*.esd=01;31:*.gz=01;31:*.jar=01;31:*.lha=01;31:*.lrz=01;31:*.lz=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.lzo=01;31:*.pyz=01;31:*.rar=01;31:*.rpm=01;31:*.rz=01;31:*.sar=01;31:*.swm=01;31:*.t7z=01;31:*.tar=01;31:*.taz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tgz=01;31:*.tlz=01;31:*.txz=01;31:*.tz=01;31:*.tzo=01;31:*.tzst=01;31:*.udeb=01;31:*.war=01;31:*.whl=01;31:*.wim=01;31:*.xz=01;31:*.z=01;31:*.zip=01;31:*.zoo=01;31:*.zst=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+GTK_A11Y=none
+NIX_USER_PROFILE_DIR=/nix/var/nix/profiles/per-user/root
+INFOPATH=/home/test/.nix-profile/info:/home/test/.nix-profile/share/info:/nix/profile/info:/nix/profile/share/info:/home/test/.local/state/nix/profile/info:/home/test/.local/state/nix/profile/share/info:/etc/profiles/per-user/test/info:/etc/profiles/per-user/test/share/info:/nix/var/nix/profiles/default/info:/nix/var/nix/profiles/default/share/info:/run/current-system/sw/info:/run/current-system/sw/share/info
+TERM=xterm-256color
+GTK_PATH=/home/test/.nix-profile/lib/gtk-2.0:/home/test/.nix-profile/lib/gtk-3.0:/home/test/.nix-profile/lib/gtk-4.0:/nix/profile/lib/gtk-2.0:/nix/profile/lib/gtk-3.0:/nix/profile/lib/gtk-4.0:/home/test/.local/state/nix/profile/lib/gtk-2.0:/home/test/.local/state/nix/profile/lib/gtk-3.0:/home/test/.local/state/nix/profile/lib/gtk-4.0:/etc/profiles/per-user/test/lib/gtk-2.0:/etc/profiles/per-user/test/lib/gtk-3.0:/etc/profiles/per-user/test/lib/gtk-4.0:/nix/var/nix/profiles/default/lib/gtk-2.0:/nix/var/nix/profiles/default/lib/gtk-3.0:/nix/var/nix/profiles/default/lib/gtk-4.0:/run/current-system/sw/lib/gtk-2.0:/run/current-system/sw/lib/gtk-3.0:/run/current-system/sw/lib/gtk-4.0
+LESSOPEN=|/nix/store/3bfbbm9s14fjdrh1x13bkd6nisza3wi5-lesspipe-2.11/bin/lesspipe.sh %s
+USER=test
+TZDIR=/etc/zoneinfo
+SHLVL=3
+PAGER=less
+QTWEBKIT_PLUGIN_PATH=/home/test/.nix-profile/lib/mozilla/plugins/:/nix/profile/lib/mozilla/plugins/:/home/test/.local/state/nix/profile/lib/mozilla/plugins/:/etc/profiles/per-user/test/lib/mozilla/plugins/:/nix/var/nix/profiles/default/lib/mozilla/plugins/:/run/current-system/sw/lib/mozilla/plugins/
+__NIXOS_SET_ENVIRONMENT_DONE=1
+LOCALE_ARCHIVE=/run/current-system/sw/lib/locale/locale-archive
+LESSKEYIN_SYSTEM=/nix/store/xp0mmqzrnzg5qip5wqmx26fmiyjviv5v-lessconfig
+TERMINFO_DIRS=/home/test/.nix-profile/share/terminfo:/nix/profile/share/terminfo:/home/test/.local/state/nix/profile/share/terminfo:/etc/profiles/per-user/test/share/terminfo:/nix/var/nix/profiles/default/share/terminfo:/run/current-system/sw/share/terminfo
+XDG_DATA_DIRS=/home/test/.nix-profile/share:/nix/profile/share:/home/test/.local/state/nix/profile/share:/etc/profiles/per-user/test/share:/nix/var/nix/profiles/default/share:/run/current-system/sw/share
+LIBEXEC_PATH=/home/test/.nix-profile/libexec:/nix/profile/libexec:/home/test/.local/state/nix/profile/libexec:/etc/profiles/per-user/test/libexec:/nix/var/nix/profiles/default/libexec:/run/current-system/sw/libexec
+PATH=/run/wrappers/bin:/home/test/.nix-profile/bin:/nix/profile/bin:/home/test/.local/state/nix/profile/bin:/etc/profiles/per-user/test/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HISTFILESIZE=0
+SUDO_UID=1000
+MAIL=/var/mail/root
+OLDPWD=/etc/nixos
+_=/run/current-system/sw/bin/env
+
+╔══════════╣ Searching Signature verification failed in dmesg
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#dmesg-signature-verification-failed
+dmesg Not Found
+
+╔══════════╣ Executing Linux Exploit Suggester
+╚ https://github.com/mzet-/linux-exploit-suggester
+grep: warning: stray \ before -
+grep: warning: stray \ before -
+[+] [CVE-2022-2586] nft_object UAF
+
+   Details: https://www.openwall.com/lists/oss-security/2022/08/29/5
+   Exposure: less probable
+   Tags: ubuntu=(20.04){kernel:5.12.13}
+   Download URL: https://www.openwall.com/lists/oss-security/2022/08/29/5/1
+   Comments: kernel.unprivileged_userns_clone=1 required (to obtain CAP_NET_ADMIN)
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html
+   Exposure: less probable
+   Tags: ubuntu=20.04{kernel:5.8.0-*}
+   Download URL: https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c
+   ext-url: https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c
+   Comments: ip_tables kernel module must be loaded
+
+
+╔══════════╣ Executing Linux Exploit Suggester 2
+╚ https://github.com/jondonas/linux-exploit-suggester-2
+grep: warning: stray \ before -
+grep: warning: stray \ before -
+
+╔══════════╣ Protections
+═╣ AppArmor enabled? .............. /etc/apparmor
+═╣ AppArmor profile? .............. kernel═╣ is linuxONE? ................... s390x Not Found
+═╣ grsecurity present? ............ grsecurity Not Found
+═╣ PaX bins present? .............. PaX Not Found
+═╣ Execshield enabled? ............ Execshield Not Found
+═╣ SELinux enabled? ............... sestatus Not Found
+═╣ Seccomp enabled? ............... disabled
+═╣ User namespace? ................ enabled
+═╣ Cgroup2 enabled? ............... enabled
+═╣ Is ASLR enabled? ............... Yes
+═╣ Printer? ....................... No
+═╣ Is this a virtual machine? ..... Yes (kvm)
+
+                                   ╔═══════════╗
+═══════════════════════════════════╣ Container ╠═══════════════════════════════════
+                                   ╚═══════════╝
+╔══════════╣ Container related tools present (if any):
+╔══════════╣ Am I Containered?
+╔══════════╣ Container details
+═╣ Is this a container? ........... No
+═╣ Any running containers? ........ No
+
+
+                                     ╔═══════╗
+═════════════════════════════════════╣ Cloud ╠═════════════════════════════════════
+                                     ╚═══════╝
+═╣ GCP Virtual Machine? ................. No
+═╣ GCP Cloud Funtion? ................... No
+═╣ AWS ECS? ............................. No
+═╣ AWS EC2? ............................. No
+═╣ AWS EC2 Beanstalk? ................... No
+═╣ AWS Lambda? .......................... No
+═╣ AWS Codebuild? ....................... No
+═╣ DO Droplet? .......................... No
+═╣ Aliyun ECS? .......................... No
+grep: /etc/cloud/cloud.cfg: No such file or directory
+═╣ Tencent CVM? .......................... No
+═╣ IBM Cloud VM? ........................ No
+═╣ Azure VM? ............................ No
+═╣ Azure APP? ........................... No
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata.google.internal
+
+
+                ╔════════════════════════════════════════════════╗
+════════════════╣ Processes, Crons, Timers, Services and Sockets ╠════════════════
+                ╚════════════════════════════════════════════════╝
+╔══════════╣ Cleaned processes
+╚ Check weird & unexpected proceses run by root: https://book.hacktricks.xyz/linux-hardening/privilege-escalation#processes
+root           1  0.0  0.6  21812 12988 ?        Ss   06:02   0:04 /run/current-system/systemd/lib/systemd/systemd
+root         400  0.0  0.8  66060 17256 ?        Ss   06:02   0:03 /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/systemd/systemd-journald
+root         502  0.0  0.4  33984  8788 ?        Ss   06:02   0:00 /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/systemd/systemd-udevd
+systemd+     664  0.0  0.3  16796  7424 ?        Ss   06:02   0:01 /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/systemd/systemd-oomd
+  └─(Caps) 0x0000000000000022=cap_dac_override,cap_kill
+systemd+     677  0.0  0.3 165120  7680 ?        Ssl  06:02   0:00 /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/systemd/systemd-timesyncd
+  └─(Caps) 0x0000000002000000=cap_sys_time
+message+     734  0.0  0.2   8688  4480 ?        Ss   06:02   0:00 /nix/store/nn54yahdasinv9hyk1hjwpakw8sqqyq0-dbus-1.14.10/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         741  0.0  0.4  17456  8320 ?        Ss   06:02   0:00 /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/systemd/systemd-logind
+worker      4892  0.0  0.3  15632  6760 ?        S    11:13   0:02      _ sshd: worker@pts/0
+worker      5089  0.0  0.2   9508  5632 pts/0    Ss   11:28   0:00          _ -bash
+root       36597  0.1  0.1   7404  3968 pts/0    S+   12:05   0:00              _ sudo -s
+root       36599  0.0  0.0   7404  1580 pts/1    Ss   12:05   0:00                  _ sudo -s
+root       36600  0.0  0.2   9268  5760 pts/1    S    12:05   0:00                      _ /run/current-system/sw/bin/bash
+root       36603  0.0  0.1   6400  3200 pts/1    S    12:05   0:00                          _ su test
+test       36605  0.1  0.2   9368  5888 pts/1    S    12:05   0:00                              _ bash
+test       36615  2.8  0.2   9436  5632 pts/1    S+   12:05   0:00                                  _ bash linpeas.sh
+test       38844  0.0  0.1   9436  3632 pts/1    S+   12:05   0:00                                  |   _ bash linpeas.sh
+test       38847  0.0  0.1  10712  3968 pts/1    R+   12:05   0:00                                  |   |   _ ps fauxwww
+test       38848  0.0  0.1   9436  3632 pts/1    S+   12:05   0:00                                  |   _ bash linpeas.sh
+test       36616  0.0  0.2  12212  4096 pts/1    S+   12:05   0:00                                  _ tee linpeas-results.txt
+root         809  0.0  0.1   5576  2176 tty1     Ss+  06:02   0:00 agetty --login-program /nix/store/3kgyqixfqf6vhq3cw41vgxv2i0x2fayz-shadow-4.14.6/bin/login --noclear --keep-baud tty1 115200,38400,9600 linux
+nscd         959  0.0  0.2 686536  5632 ?        Ssl  06:02   0:01 /nix/store/w44ykc1hjhg6z1m06x1h38p6zk86h91b-nsncd-unstable-2024-01-16/bin/nsncd
+worker      4882  0.0  0.5  20076 11904 ?        Ss   11:13   0:00 /run/current-system/systemd/lib/systemd/systemd --user --deserialize=25
+worker      4884  0.0  0.1  20364  2992 ?        S    11:13   0:00  _ (sd-pam)
+
+╔══════════╣ Binary processes permissions (non 'root root' and not belonging to current user)
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#processes
+
+╔══════════╣ Processes whose PPID belongs to a different user (not root)
+╚ You will know if a user can somehow spawn processes as a different user
+Proc 664 with ppid 1 is run by user systemd-oom but the ppid user is root
+Proc 677 with ppid 1 is run by user systemd-timesync but the ppid user is root
+Proc 695 with ppid 1 is run by user dhcpcd but the ppid user is root
+Proc 734 with ppid 1 is run by user messagebus but the ppid user is root
+Proc 823 with ppid 697 is run by user dhcpcd but the ppid user is root
+Proc 827 with ppid 697 is run by user dhcpcd but the ppid user is root
+Proc 959 with ppid 1 is run by user nscd but the ppid user is root
+Proc 4882 with ppid 1 is run by user worker but the ppid user is root
+Proc 4892 with ppid 4876 is run by user worker but the ppid user is root
+Proc 36605 with ppid 36603 is run by user test but the ppid user is root
+
+╔══════════╣ Files opened by processes belonging to other users
+╚ This is usually empty because of the lack of privileges to read other user processes information
+
+╔══════════╣ Processes with credentials in memory (root req)
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#credentials-from-process-memory
+gdm-password Not Found
+gnome-keyring-daemon Not Found
+lightdm Not Found
+vsftpd Not Found
+apache2 Not Found
+sshd: process found (dump creds from memory as root)
+
+╔══════════╣ Cron jobs
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#scheduled-cron-jobs
+crontab Not Found
+incrontab Not Found
+
+╔══════════╣ Systemd PATH
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#systemd-path-relative-paths
+PATH=/nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/bin/
+
+╔══════════╣ Analyzing .service files
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#services
+You can't write on systemd PATH
+
+╔══════════╣ System timers
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#timers
+NEXT                         LEFT LAST                              PASSED UNIT                         ACTIVATES
+Wed 2024-07-10 13:00:00 UTC 54min Wed 2024-07-10 12:00:01 UTC     5min ago logrotate.timer              logrotate.service
+Thu 2024-07-11 06:17:08 UTC   18h Wed 2024-07-10 06:17:08 UTC 5h 48min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+╔══════════╣ Analyzing .timer files
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#timers
+
+╔══════════╣ Analyzing .socket files
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sockets
+
+╔══════════╣ Unix Sockets Listening
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sockets
+sed: -e expression #1, char 0: no previous regular expression
+/nix/var/nix/daemon-socket/socket
+  └─(Read Write)
+/nix/var/nix/gc-socket/socket
+  └─(Read Write)
+/run/dbus/system_bus_socket
+  └─(Read Write)
+/run/dhcpcd/sock
+/run/dhcpcd/unpriv.sock
+  └─(Read Write)
+/run/nscd/socket
+  └─(Read Write)
+/run/systemd/coredump
+/run/systemd/inaccessible/sock
+/run/systemd/io.systemd.ManagedOOM
+  └─(Read Write)
+/run/systemd/journal/dev-log
+  └─(Read Write)
+/run/systemd/journal/io.systemd.journal
+/run/systemd/journal/socket
+  └─(Read Write)
+/run/systemd/journal/stdout
+  └─(Read Write)
+/run/systemd/notify
+  └─(Read Write)
+/run/systemd/oom/io.systemd.ManagedOOM
+  └─(Read Write)
+/run/systemd/private
+/run/systemd/userdb/io.systemd.DynamicUser
+  └─(Read Write)
+/run/udev/control
+/run/user/1000/bus
+/run/user/1000/systemd/private
+/var/run/dhcpcd/sock
+/var/run/dhcpcd/unpriv.sock
+  └─(Read Write)
+/var/run/nscd/socket
+  └─(Read Write)
+
+╔══════════╣ D-Bus config files
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#d-bus
+
+╔══════════╣ D-Bus Service Objects list
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#d-bus
+NAME                        PID PROCESS         USER             CONNECTION    UNIT                      SESSION DESCRIPTION
+:1.0                        677 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -       -
+:1.1                        664 systemd-oomd    systemd-oom      :1.1          systemd-oomd.service      -       -
+:1.2                        741 systemd-logind  root             :1.2          systemd-logind.service    -       -
+:1.23                      4882 systemd         worker           :1.23         user@1000.service         -       -
+:1.3                          1 systemd         root             :1.3          init.scope                -       -
+:1.49                     40858 busctl          test             :1.49         session-3.scope           3       -
+org.freedesktop.DBus          1 systemd         root             -             init.scope                -       -
+org.freedesktop.home1         - -               -                (activatable) -                         -       -
+org.freedesktop.hostname1     - -               -                (activatable) -                         -       -
+org.freedesktop.import1       - -               -                (activatable) -                         -       -
+org.freedesktop.locale1       - -               -                (activatable) -                         -       -
+org.freedesktop.login1      741 systemd-logind  root             :1.2          systemd-logind.service    -       -
+org.freedesktop.machine1      - -               -                (activatable) -                         -       -
+org.freedesktop.network1      - -               -                (activatable) -                         -       -
+org.freedesktop.oom1        664 systemd-oomd    systemd-oom      :1.1          systemd-oomd.service      -       -
+ -- UID=997 EUID=997 
+org.freedesktop.portable1     - -               -                (activatable) -                         -       -
+org.freedesktop.resolve1      - -               -                (activatable) -                         -       -
+org.freedesktop.systemd1      1 systemd         root             :1.3          init.scope                -       -
+org.freedesktop.timedate1     - -               -                (activatable) -                         -       -
+org.freedesktop.timesync1   677 systemd-timesyn systemd-timesync :1.0          systemd-timesyncd.service -       -
+
+
+                              ╔═════════════════════╗
+══════════════════════════════╣ Network Information ╠══════════════════════════════
+                              ╚═════════════════════╝
+╔══════════╣ Hostname, hosts and DNS
+nixos
+127.0.0.1 localhost
+::1 localhost
+127.0.0.2 nixos.masterarbeit.local nixos
+::1 nixos.masterarbeit.local nixos
+domain default
+search default test
+nameserver 192.168.122.1
+nameserver 192.168.100.1
+options edns0
+masterarbeit.local
+
+╔══════════╣ Interfaces
+enp1s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.122.32  netmask 255.255.255.192  broadcast 192.168.122.63
+        inet6 fe80::5054:ff:feac:551  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:ac:05:51  txqueuelen 1000  (Ethernet)
+        RX packets 37633  bytes 4497966 (4.2 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 23926  bytes 2900749 (2.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp7s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.100.140  netmask 255.255.255.0  broadcast 192.168.100.255
+        inet6 fe80::5054:ff:fe30:40f9  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:30:40:f9  txqueuelen 1000  (Ethernet)
+        RX packets 14552  bytes 1465662 (1.3 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 81  bytes 8264 (8.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 80  bytes 7280 (7.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 80  bytes 7280 (7.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+╔══════════╣ Active Ports
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#open-ports
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+
+╔══════════╣ Can I sniff with tcpdump?
+No
+
+
+
+                               ╔═══════════════════╗
+═══════════════════════════════╣ Users Information ╠═══════════════════════════════
+                               ╚═══════════════════╝
+╔══════════╣ My user
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#users
+uid=1002(test) gid=100(users) groups=100(users)
+
+╔══════════╣ Do I have PGP keys?
+gpg Not Found
+netpgpkeys Not Found
+netpgp Not Found
+
+╔══════════╣ Checking 'sudo -l', /etc/sudoers, and /etc/sudoers.d
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-and-suid
+
+╔══════════╣ Checking sudo tokens
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#reusing-sudo-tokens
+ptrace protection is enabled (1)
+
+╔══════════╣ Checking Pkexec policy
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation/interesting-groups-linux-pe#pe-method-2
+
+╔══════════╣ Superusers
+root:x:0:0:System administrator:/root:/run/current-system/sw/bin/bash
+
+╔══════════╣ Users with console
+root:x:0:0:System administrator:/root:/run/current-system/sw/bin/bash
+test:x:1002:100::/home/test:/run/current-system/sw/bin/bash
+worker:x:1000:100::/home/worker:/run/current-system/sw/bin/bash
+x:x:1001:100::/home/x:/run/current-system/sw/bin/bash
+
+╔══════════╣ All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1000(worker) gid=100(users) groups=100(users),1(wheel)
+uid=1001(x) gid=100(users) groups=100(users)
+uid=1002(test) gid=100(users) groups=100(users)
+uid=151(systemd-coredump) gid=997(systemd-coredump) groups=997(systemd-coredump)
+uid=152(systemd-network) gid=152(systemd-network) groups=152(systemd-network)
+uid=153(systemd-resolve) gid=153(systemd-resolve) groups=153(systemd-resolve)
+uid=154(systemd-timesync) gid=154(systemd-timesync) groups=154(systemd-timesync)
+uid=30001(nixbld1) gid=30000(nixbld) groups=30000(nixbld)
+uid=30002(nixbld2) gid=30000(nixbld) groups=30000(nixbld)
+uid=30003(nixbld3) gid=30000(nixbld) groups=30000(nixbld)
+uid=30004(nixbld4) gid=30000(nixbld) groups=30000(nixbld)
+uid=30005(nixbld5) gid=30000(nixbld) groups=30000(nixbld)
+uid=30006(nixbld6) gid=30000(nixbld) groups=30000(nixbld)
+uid=30007(nixbld7) gid=30000(nixbld) groups=30000(nixbld)
+uid=30008(nixbld8) gid=30000(nixbld) groups=30000(nixbld)
+uid=30009(nixbld9) gid=30000(nixbld) groups=30000(nixbld)
+uid=30010(nixbld10) gid=30000(nixbld) groups=30000(nixbld)
+uid=30011(nixbld11) gid=30000(nixbld) groups=30000(nixbld)
+uid=30012(nixbld12) gid=30000(nixbld) groups=30000(nixbld)
+uid=30013(nixbld13) gid=30000(nixbld) groups=30000(nixbld)
+uid=30014(nixbld14) gid=30000(nixbld) groups=30000(nixbld)
+uid=30015(nixbld15) gid=30000(nixbld) groups=30000(nixbld)
+uid=30016(nixbld16) gid=30000(nixbld) groups=30000(nixbld)
+uid=30017(nixbld17) gid=30000(nixbld) groups=30000(nixbld)
+uid=30018(nixbld18) gid=30000(nixbld) groups=30000(nixbld)
+uid=30019(nixbld19) gid=30000(nixbld) groups=30000(nixbld)
+uid=30020(nixbld20) gid=30000(nixbld) groups=30000(nixbld)
+uid=30021(nixbld21) gid=30000(nixbld) groups=30000(nixbld)
+uid=30022(nixbld22) gid=30000(nixbld) groups=30000(nixbld)
+uid=30023(nixbld23) gid=30000(nixbld) groups=30000(nixbld)
+uid=30024(nixbld24) gid=30000(nixbld) groups=30000(nixbld)
+uid=30025(nixbld25) gid=30000(nixbld) groups=30000(nixbld)
+uid=30026(nixbld26) gid=30000(nixbld) groups=30000(nixbld)
+uid=30027(nixbld27) gid=30000(nixbld) groups=30000(nixbld)
+uid=30028(nixbld28) gid=30000(nixbld) groups=30000(nixbld)
+uid=30029(nixbld29) gid=30000(nixbld) groups=30000(nixbld)
+uid=30030(nixbld30) gid=30000(nixbld) groups=30000(nixbld)
+uid=30031(nixbld31) gid=30000(nixbld) groups=30000(nixbld)
+uid=30032(nixbld32) gid=30000(nixbld) groups=30000(nixbld)
+uid=4(messagebus) gid=4(messagebus) groups=4(messagebus)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=996(sshd) gid=995(sshd) groups=995(sshd)
+uid=997(systemd-oom) gid=996(systemd-oom) groups=996(systemd-oom)
+uid=998(nscd) gid=998(nscd) groups=998(nscd)
+uid=999(dhcpcd) gid=999(dhcpcd) groups=999(dhcpcd)
+
+╔══════════╣ Login now
+ 12:06:02 up  6:03,  2 users,  load average: 0.32, 0.36, 0.40
+USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
+worker   pts/0     11:28   18.00s  0.10s  0.01s sshd: worker [priv]                                                                             
+worker   pts/1     12:05   18.00s  0.30s  0.03s sudo -s
+
+╔══════════╣ Last logons
+reboot   system boot  Tue Jun 11 06:57:58 2024 - Tue Jun 11 06:58:32 2024  (00:00)     0.0.0.0
+root     tty1         Tue Jun 11 06:56:25 2024 - Tue Jun 11 06:57:55 2024  (00:01)     0.0.0.0
+root     tty1         Tue Jun 11 06:54:11 2024 - Tue Jun 11 06:54:25 2024  (00:00)     0.0.0.0
+reboot   system boot  Tue Jun 11 06:53:54 2024 - Tue Jun 11 06:57:55 2024  (00:04)     0.0.0.0
+root     tty1         Tue Jun 11 06:29:03 2024 - Tue Jun 11 06:35:56 2024  (00:06)     0.0.0.0
+reboot   system boot  Tue Jun 11 06:28:36 2024 - Tue Jun 11 06:35:56 2024  (00:07)     0.0.0.0
+root     tty1         Tue Jun 11 05:44:49 2024 - Tue Jun 11 06:28:32 2024  (00:43)     0.0.0.0
+reboot   system boot  Tue Jun 11 05:44:27 2024 - Tue Jun 11 06:28:33 2024  (00:44)     0.0.0.0
+
+wtmp begins Tue Jun 11 05:44:27 2024
+
+╔══════════╣ Last time logon each user
+
+╔══════════╣ Do not forget to test 'su' as any other user with shell: without password and with their names as password (I don't do it in FAST mode...)
+
+╔══════════╣ Do not forget to execute 'sudo -l' without password or with valid password (if you know it)!!
+
+
+
+                             ╔══════════════════════╗
+═════════════════════════════╣ Software Information ╠═════════════════════════════
+                             ╚══════════════════════╝
+╔══════════╣ Useful software
+/run/current-system/sw/bin/base64
+/run/current-system/sw/bin/curl
+/run/current-system/sw/bin/nc
+/run/current-system/sw/bin/perl
+/run/current-system/sw/bin/ping
+/run/wrappers/bin/sudo
+
+╔══════════╣ Installed Compilers
+
+
+╔══════════╣ Analyzing Apache-Nginx Files (limit 70)
+Apache version: apache2 Not Found
+httpd Not Found
+
+Nginx version: nginx Not Found
+
+══╣ PHP exec extensions
+
+
+
+
+drwxr-x--- 2 60 60 4096 Jul  4 07:38 /var/cache/nginx
+find: ‘/var/cache/nginx’: Permission denied
+
+drwxr-x--- 2 60 60 4096 Jul  9 05:58 /var/log/nginx
+find: ‘/var/log/nginx’: Permission denied
+
+
+╔══════════╣ Searching ssl/ssh files
+╔══════════╣ Analyzing SSH Files (limit 70)
+
+
+
+
+
+-rw-r--r-- 1 root root 92 Jun 11 06:27 /etc/ssh/ssh_host_ed25519_key.pub
+-rw-r--r-- 1 root root 736 Jun 11 06:27 /etc/ssh/ssh_host_rsa_key.pub
+
+GatewayPorts no
+PasswordAuthentication yes
+PermitRootLogin prohibit-password
+UsePAM yes
+Port 22
+
+Searching inside /etc/ssh/ssh_config for interesting info
+Host *
+AddressFamily any
+GlobalKnownHostsFile /etc/ssh/ssh_known_hosts
+ForwardX11 no
+
+╔══════════╣ Analyzing PAM Auth Files (limit 70)
+drwxr-xr-x 2 root root 4096 Jul 10 11:59 /etc/pam.d
+lrwxrwxrwx 1 root root 22 Jul 10 11:59 /etc/pam.d/sshd -> /etc/static/pam.d/sshd
+account required pam_unix.so # unix (order 10900)
+auth sufficient pam_unix.so likeauth try_first_pass # unix (order 11500)
+auth required pam_deny.so # deny (order 12300)
+password sufficient pam_unix.so nullok yescrypt # unix (order 10200)
+session required pam_env.so conffile=/etc/pam/environment readenv=0 # env (order 10100)
+session required pam_unix.so # unix (order 10200)
+session required pam_loginuid.so # loginuid (order 10300)
+session optional /nix/store/d9ff8aqv537mlhpinncx6dwc7a5ky6gk-systemd-255.6/lib/security/pam_systemd.so # systemd (order 12000)
+
+
+
+
+╔══════════╣ Searching uncommon passwd files (splunk)
+passwd file: /etc/pam.d/passwd
+passwd file: /etc/passwd
+
+╔══════════╣ Analyzing Github Files (limit 70)
+
+
+
+drwxr-xr-x 8 root root 4096 Jul  8 11:25 /etc/nixos/.git
+
+
+╔══════════╣ Analyzing Samba Files (limit 70)
+lrwxrwxrwx 1 root root 26 Jul 10 11:59 /etc/samba/smb.conf -> /etc/static/samba/smb.conf
+
+
+
+                      ╔════════════════════════════════════╗
+══════════════════════╣ Files with Interesting Permissions ╠══════════════════════
+                      ╚════════════════════════════════════╝
+╔══════════╣ SUID - Check easy privesc, exploits and write perms
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-and-suid
+strings Not Found
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/chsh
+-r-sr-x--- 1 root messagebus 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/dbus-daemon-launch-helper
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/fusermount
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/fusermount3
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/mount  --->  Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/newgidmap
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/newgrp  --->  HP-UX_10.20
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/newuidmap
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/passwd  --->  Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997)
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/sg (Unknown SUID binary!)
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/su
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/sudo  --->  check_if_the_sudo_version_is_vulnerable
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/sudo  --->  check_if_the_sudo_version_is_vulnerableedit
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/umount  --->  BSD/Linux(08-1996)
+-r-s--x--x 1 root root 62K Jul 10 11:59 /run/wrappers/wrappers.7cG63ueIsM/unix_chkpwd
+
+╔══════════╣ SGID
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-and-suid
+
+╔══════════╣ Checking misconfigurations of ld.so
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#ld.so
+/etc/ld.so.conf
+Content of /etc/ld.so.conf:
+
+/etc/ld.so.preload
+╔══════════╣ Capabilities
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#capabilities
+══╣ Current shell capabilities
+CapInh:  0x0000000000000000=
+CapPrm:  0x0000000000000000=
+CapEff:	 0x0000000000000000=
+CapBnd:  0x000001ffffffffff=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore
+CapAmb:  0x0000000000000000=
+
+══╣ Parent process capabilities
+CapInh:	 0x0000000000000000=
+CapPrm:	 0x0000000000000000=
+CapEff:	 0x0000000000000000=
+CapBnd:	 0x000001ffffffffff=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore
+CapAmb:	 0x0000000000000000=
+
+
+Files with capabilities (limited to 50):
+
+╔══════════╣ Files with ACLs (limited to 50)
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#acls
+files with acls in searched folders Not Found
+
+╔══════════╣ Files (scripts) in /etc/profile.d/
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#profiles-files
+
+╔══════════╣ Permissions in init, init.d, systemd, and rc.d
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#init-init-d-systemd-and-rc-d
+
+═╣ Hashes inside passwd file? ........... No
+═╣ Writable passwd file? ................ No
+═╣ Credentials in fstab/mtab? ........... No
+═╣ Can I read shadow files? ............. No
+═╣ Can I read shadow plists? ............ No
+═╣ Can I write shadow plists? ........... No
+═╣ Can I read opasswd file? ............. No
+═╣ Can I write in network-scripts? ...... No
+═╣ Can I read root folder? .............. No
+
+╔══════════╣ Searching root files in home dirs (limit 30)
+/home/
+/home/lost+found
+/root/
+
+╔══════════╣ Searching folders owned by me containing others files on it (limit 100)
+
+╔══════════╣ Readable files belonging to root and readable by me but not world readable
+
+╔══════════╣ Interesting writable files owned by me or writable by everyone (not in Home) (max 500)
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#writable-files
+/dev/mqueue
+/dev/shm
+/tmp
+/tmp/.font-unix
+/tmp/.ICE-unix
+/tmp/linpeas-results.txt
+/tmp/linpeas.sh
+/tmp/.X11-unix
+#)You_can_write_even_more_files_inside_last_directory
+
+/var/tmp
+
+╔══════════╣ Interesting GROUP writable files (not in Home) (max 500)
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#writable-files
+
+
+
+                            ╔═════════════════════════╗
+════════════════════════════╣ Other Interesting Files ╠════════════════════════════
+                            ╚═════════════════════════╝
+╔══════════╣ .sh files in path
+╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#script-binaries-in-path
+/run/current-system/sw/bin/amuFormat.sh
+
+╔══════════╣ Executable files potentially added by user (limit 70)
+2024-07-10+11:59:19.6619841040 /run/wrappers/wrappers.7cG63ueIsM/umount
+2024-07-10+11:59:19.6569839840 /run/wrappers/wrappers.7cG63ueIsM/sudoedit
+2024-07-10+11:59:19.6529838880 /run/wrappers/wrappers.7cG63ueIsM/sudo
+2024-07-10+11:59:19.6489837920 /run/wrappers/wrappers.7cG63ueIsM/su
+2024-07-10+11:59:19.6439836720 /run/wrappers/wrappers.7cG63ueIsM/sg
+2024-07-10+11:59:19.6399835760 /run/wrappers/wrappers.7cG63ueIsM/passwd
+2024-07-10+11:59:19.6349834560 /run/wrappers/wrappers.7cG63ueIsM/newuidmap
+2024-07-10+11:59:19.6299833360 /run/wrappers/wrappers.7cG63ueIsM/newgrp
+2024-07-10+11:59:19.6259832400 /run/wrappers/wrappers.7cG63ueIsM/newgidmap
+2024-07-10+11:59:19.6219831440 /run/wrappers/wrappers.7cG63ueIsM/mount
+2024-07-10+11:59:19.6169830240 /run/wrappers/wrappers.7cG63ueIsM/fusermount3
+2024-07-10+11:59:19.6129829280 /run/wrappers/wrappers.7cG63ueIsM/fusermount
+2024-07-10+11:59:19.6029826880 /run/wrappers/wrappers.7cG63ueIsM/chsh
+
+╔══════════╣ Unexpected in root
+/nix
+
+╔══════════╣ Modified interesting files in the last 5mins (limit 100)
+/var/log/journal/a2969be2f719403182dd912d767064bb/system.journal
+/var/log/journal/a2969be2f719403182dd912d767064bb/user-1000.journal
+/var/log/journal/a2969be2f719403182dd912d767064bb/user-1002.journal
+
+
+╔══════════╣ Files inside /home/test (limit 20)
+
+╔══════════╣ Files inside others home (limit 20)
+
+╔══════════╣ Searching installed mail applications
+
+╔══════════╣ Mails (limit 50)
+
+╔══════════╣ Backup files (limited 100)
+-rw-r--r-- 1 root root 0 Jun 11 05:44 /etc/resolv.conf.bak
+-r--r--r-- 1 root root 3179 Jan  1  1970 /nix/store/zqk2i5ii9cxp7a1jb8jf89ra6ni3fflf-lvm2-2.03.23-man/share/man/man8/vgcfgbackup.8.gz
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 576 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 8330 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/tests/borgbackup.nix
+-r--r--r-- 1 root root 1614 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/tests/mysql/mysql-autobackup.nix
+-r--r--r-- 1 root root 2007 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/nixos/tests/mysql/mysql-backup.nix
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 576 Jan  1  1970 /nix/store/whbh109xks8v50njp9995famx4wdyhzy-nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/6wad46pd5krdzc6fz1abzxshsbzqr4rs-borgbackup.md
+-r--r--r-- 1 root root 3224 Jan  1  1970 /nix/store/fvyx1zq8g852ljd6h6m21vfw7fkqnckj-linux-6.6.32/lib/modules/6.6.32/kernel/drivers/net/team/team_mode_activebackup.ko.xz
+-r--r--r-- 1 root root 3179 Jan  1  1970 /nix/store/rgsxf23n7r88lrwx8n33vm6jmsc2lm92-lvm2-2.03.23-man/share/man/man8/vgcfgbackup.8.gz
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 620 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 8330 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/tests/borgbackup.nix
+-r--r--r-- 1 root root 1614 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/tests/mysql/mysql-autobackup.nix
+-r--r--r-- 1 root root 2007 Jan  1  1970 /nix/store/4d5ga6slxvbq50biqsbzzqgm402hbcbc-source/nixos/tests/mysql/mysql-backup.nix
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 576 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 8330 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/tests/borgbackup.nix
+-r--r--r-- 1 root root 1614 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/tests/mysql/mysql-autobackup.nix
+-r--r--r-- 1 root root 2007 Jan  1  1970 /nix/store/xjn3184743q0fxayzwrhil2i06pr61x8-source/nixos/tests/mysql/mysql-backup.nix
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 620 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 8330 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/tests/borgbackup.nix
+-r--r--r-- 1 root root 1614 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/tests/mysql/mysql-autobackup.nix
+-r--r--r-- 1 root root 2007 Jan  1  1970 /nix/store/j4jzjbr302cw5bl0n3pch5j9bh5qwmaj-source/nixos/tests/mysql/mysql-backup.nix
+-r--r--r-- 1 root root 28490 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/backup/borgbackup.nix
+-r--r--r-- 1 root root 5423 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/backup/postgresql-backup.nix
+-r--r--r-- 1 root root 5591 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/backup/borgbackup.md
+-r--r--r-- 1 root root 3012 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/backup/mysql-backup.nix
+-r--r--r-- 1 root root 4024 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/backup/automysqlbackup.nix
+-r--r--r-- 1 root root 576 Jan  1  1970 /nix/store/d1nksql19nl3w06ac0nb1al05nj0plp8-nixos/modules/services/security/vaultwarden/backup.sh
+-r--r--r-- 1 root root 3232 Jan  1  1970 /nix/store/vyi5pb0gcyy86d6skivwkc66h2h92gvz-linux-6.6.36/lib/modules/6.6.36/kernel/drivers/net/team/team_mode_activebackup.ko.xz
+
+╔══════════╣ Searching tables inside readable .db/.sql/.sqlite files (limit 100)
+Found /var/lib/clamav/fangfrisch_db.sqlite
+
+
+╔══════════╣ Web files?(output limit)
+
+╔══════════╣ All relevant hidden files (not in /sys/ or the ones listed in the previous check) (limit 70)
+-rw-r--r-- 1 root root 8 Jul 10 11:59 /etc/.clean
+-rw-r--r-- 1 root root 208 Jun 10 15:09 /etc/.updated
+-rw------- 1 root root 0 Jun 10 15:15 /etc/.pwd.lock
+-rw-r--r-- 1 root root 208 Jun 10 15:09 /var/.updated
+-r-xr-xr-x 1 root root 590 Jan  1  1970 /nix/store/9wrwa5cdrswzi5xlbzxda5bcbhzfd5yf-python3.11-markdown-3.6/bin/.markdown_py-wrapped
+-r--r--r-- 1 root root 14349 Jan  1  1970 /nix/store/ncnhxdl5zlsbzar3bah5vlxxrsw0jd77-perl5.38.2-DBI-1.643/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/DBI/.packlist
+-r-xr-xr-x 1 root root 2395 Jan  1  1970 /nix/store/abnch2ab1jfh3kvlrf1fshnx4i2p7kdf-python3.11-argcomplete-3.3.0/bin/.register-python-argcomplete-wrapped
+-r-xr-xr-x 1 root root 5756 Jan  1  1970 /nix/store/abnch2ab1jfh3kvlrf1fshnx4i2p7kdf-python3.11-argcomplete-3.3.0/bin/.activate-global-python-argcomplete-wrapped
+-r-xr-xr-x 1 root root 3024 Jan  1  1970 /nix/store/abnch2ab1jfh3kvlrf1fshnx4i2p7kdf-python3.11-argcomplete-3.3.0/bin/.python-argcomplete-check-easy-install-script-wrapped
+-r--r--r-- 1 root root 204 Jan  1  1970 /nix/store/2bnls4ssrgjlx2qhvxmvgavzrq5qk8lw-perl5.38.2-CGI-Fast-2.16/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/CGI/Fast/.packlist
+-r--r--r-- 1 root root 499 Jan  1  1970 /nix/store/kz7cdmi91jycql2vgli6m2pacbw09ln4-perl5.38.2-Clone-0.46/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Clone/.packlist
+-r--r--r-- 1 root root 216 Jan  1  1970 /nix/store/zv8gdjmqgc58s8s87hfi83b51qbq77jh-perl5.38.2-HTTP-Daemon-6.16/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/HTTP/Daemon/.packlist
+-r--r--r-- 1 root root 1880 Jan  1  1970 /nix/store/2k7y12i1xql4745sdsrvw6aj5lq0rszh-perl5.38.2-HTML-Parser-3.81/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/HTML/Parser/.packlist
+-r-xr-xr-x 1 root root 2486 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-complain-wrapped
+-r-xr-xr-x 1 root root 22462 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-notify-wrapped
+-r-xr-xr-x 1 root root 8032 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-unconfined-wrapped
+-r-xr-xr-x 1 root root 2550 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-audit-wrapped
+-r-xr-xr-x 1 root root 2951 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-logprof-wrapped
+-r-xr-xr-x 1 root root 5786 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-mergeprof-wrapped
+-r-xr-xr-x 1 root root 7776 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-genprof-wrapped
+-r-xr-xr-x 1 root root 2469 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-enforce-wrapped
+-r-xr-xr-x 1 root root 2471 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-disable-wrapped
+-r-xr-xr-x 1 root root 3335 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-remove-unknown-wrapped
+-r-xr-xr-x 1 root root 2590 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-cleanprof-wrapped
+-r-xr-xr-x 1 root root 2592 Jan  1  1970 /nix/store/w09nm8k9lnf8gn7m6jgrc2rmj5wcamk5-apparmor-utils-3.1.7/bin/.aa-autodep-wrapped
+-r--r--r-- 1 root root 2680 Jan  1  1970 /nix/store/j4ynhpin4p6sav4dghcd9nvw3si4gzww-perl5.38.2-Authen-SASL-2.1700/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Authen/SASL/.packlist
+-r--r--r-- 1 root root 842 Jan  1  1970 /nix/store/zfp0l34h8ljq21ig9kdrqc9ljg4dk315-perl5.38.2-Net-HTTP-6.23/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Net/HTTP/.packlist
+-r--r--r-- 1 root root 481 Jan  1  1970 /nix/store/016qnikzcab6nvk0k1crfad147ag3slx-perl5.38.2-WWW-RobotRules-6.02/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/WWW/RobotRules/.packlist
+-r--r--r-- 1 root root 12545 Jan  1  1970 /nix/store/3sbwcwwglrh55plbqhngakxdqzm700h8-perl5.38.2-Net-SSLeay-1.92/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Net/SSLeay/.packlist
+-r--r--r-- 1 root root 398 Jan  1  1970 /nix/store/c8g20mvgnrjlqvi656i8wm669dwq440c-perl5.38.2-TermReadKey-2.38/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Term/ReadKey/.packlist
+-r--r--r-- 1 root root 208 Jan  1  1970 /nix/store/ljix91lwip4pxc3zs6ldlvc1cw2idh7k-perl5.38.2-HTTP-Date-6.06/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/HTTP/Date/.packlist
+-r--r--r-- 1 root root 228 Jan  1  1970 /nix/store/n3hr9m5dgdmxkdmpcgk8j75dk1cvzg9j-perl5.38.2-HTTP-Negotiate-6.01/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/HTTP/Negotiate/.packlist
+-r--r--r-- 1 root root 221 Jan  1  1970 /nix/store/8ifhqnifz3fscfwk9590mjknyycxvlyk-perl5.38.2-Net-SMTP-SSL-1.04/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/Net/SMTP/SSL/.packlist
+-r--r--r-- 1 root root 4796 Jan  1  1970 /nix/store/cinfc38a2prv2xr41bzycmv2d2rjbm5a-perl5.38.2-libwww-perl-6.72/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/LWP/.packlist
+-r--r--r-- 1 root root 1794 Jan  1  1970 /nix/store/ms7skgdayd4mn84pw07z4kinkd307121-perl5.38.2-CGI-4.59/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/CGI/.packlist
+-r--r--r-- 1 root root 18 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/.version-suffix
+-r--r--r-- 1 root root 2916 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/.editorconfig
+-r--r--r-- 1 root root 139 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/pkgs/development/lua-modules/updater/.flake8
+-r--r--r-- 1 root root 13 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/pkgs/development/tools/yarn2nix-moretea/yarn2nix/.prettierignore
+-r--r--r-- 1 root root 5 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/lib/.version
+-r--r--r-- 1 root root 950 Jan  1  1970 /nix/store/k5v186i7pyg8pc9djhbggdshnk7dfp5b-nixos-24.05.1135.9b5328b7f761/nixos/.mailmap
+-r--r--r-- 1 root root 5 Jan  1  1970 /nix/store/shaairy5jz6z6y11ff5920ifcj3sk80d-lib/.version
+-r--r--r-- 1 root root 1718 Jan  1  1970 /nix/store/f9h2b1lyl4w8wif5dz4s546wp84wp8bm-perl5.38.2-IO-Stringy-2.113/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/IO/Stringy/.packlist
+-r--r--r-- 1 root root 1090 Jan  1  1970 /nix/store/zbf5lqywad6784zwghyaf0q9g76bansy-perl5.38.2-JSON-4.10/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/JSON/.packlist
+-r--r--r-- 1 root root 277 Jan  1  1970 /nix/store/y2ds7vvhg0fsy8gf55q4x1hxjw3xkjp6-libapparmor-3.1.7/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/LibAppArmor/.packlist
+-r-xr-xr-x 1 root root 24511 Jan  1  1970 /nix/store/224riz0b4iv8wvsach32xxc80k6wy0im-openresolv-3.13.2/bin/.resolvconf-wrapped
+-r-xr-xr-x 1 root root 85640 Jan  1  1970 /nix/store/xjiifrz7ha6s29gp0p0j3w0155phxmia-systemd-255.6/bin/.systemd-cryptenroll-wrapped
+-r-xr-xr-x 1 root root 103832 Jan  1  1970 /nix/store/xjiifrz7ha6s29gp0p0j3w0155phxmia-systemd-255.6/bin/.systemd-cryptsetup-wrapped
+-r--r--r-- 1 root root 441 Jan  1  1970 /nix/store/2vpvdw8lx7h9l6m9140kzyfpj4izw61n-perl5.38.2-String-ShellQuote-1.04/lib/perl5/site_perl/5.38.2/x86_64-linux-thread-multi/auto/String/ShellQuote/.packlist
+-r-xr-xr-x 1 root root 51998 Jan  1  1970 /nix/store/jy0hbkj43gawmzrsxvl7w0q6hzrwvgvg-lynis-3.1.1/bin/.lynis-wrapped
+-r-xr-xr-x 1 root root 1712 Jan  1  1970 /nix/store/zy8irmlqnf4wkm7in3acg61vhjbnj3ks-fangfrisch-1.9.0/bin/.fangfrisch-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.json2json-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.toml2msgpack-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.cbor2cbor-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.yaml2json-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.toml2toml-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.json2yaml-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.toml2yaml-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.json2msgpack-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.remarshal-wrapped
+-r-xr-xr-x 1 root root 1214 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.msgpack2msgpack-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.cbor2msgpack-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.yaml2cbor-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.toml2cbor-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.cbor2toml-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.yaml2yaml-wrapped
+-r-xr-xr-x 1 root root 1208 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.cbor2yaml-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.msgpack2cbor-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.msgpack2toml-wrapped
+-r-xr-xr-x 1 root root 1211 Jan  1  1970 /nix/store/56y37lz95pgfs5ah82qpwqsca4qi4bbz-python3.11-remarshal-0.17.1/bin/.msgpack2yaml-wrapped
+
+╔══════════╣ Readable files inside /tmp, /var/tmp, /private/tmp, /private/var/at/tmp, /private/var/tmp, and backup folders (limit 70)
+-rw-r--r-- 1 test users 862779 Jul 10 11:52 /tmp/linpeas.sh
+-rw-r--r-- 1 test users 73497 Jul 10 12:06 /tmp/linpeas-results.txt
+
+╔══════════╣ Checking for TTY (sudo/su) passwords in audit logs
+
+╔══════════╣ Searching passwords inside logs (limit 70)
+
+
+
+                                ╔════════════════╗
+════════════════════════════════╣ API Keys Regex ╠════════════════════════════════
+                                ╚════════════════╝
+Regexes to search for API keys aren't activated, use param '-r' 

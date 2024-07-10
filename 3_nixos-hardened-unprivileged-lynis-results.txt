@@ -1,0 +1,16 @@
+# nix-shell -p lynis --command 'lynis audit system'
+error:
+       … <borked>
+
+         at «none»:0: (source not available)
+
+       … while calling the 'import' builtin
+
+         at «string»:1:18:
+
+            1| {...}@args: with import <nixpkgs> args; (pkgs.runCommandCC or pkgs.runCommand) "shell" { buildInputs = [ (lynis) ]; } ""
+             |                  ^
+
+       (stack trace truncated; use '--show-trace' to show the full trace)
+
+       error: cannot open connection to remote store 'daemon': error: reading from file: Connection reset by peer
