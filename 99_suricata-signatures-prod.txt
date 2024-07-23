@@ -1,0 +1,31 @@
+# jq -r '.alert.signature' < /var/log/suricata/eve.json | sort | uniq
+🐾 - 🏴‍☠️ Connection to an IP flagged at Cobalt Strike C2
+🐾 - 🏴‍☠️ Connection to an IP flagged at Log4Shell Exploit Attempt
+🐾 - 🚨 DICOM ⚕ A-ASSOCIATE request from NMAP - System Information Discovery 🥷 - T1082
+ET SCAN Zmap User-Agent (Inbound)
+GPL ATTACK_RESPONSE id check returned root
+🐾 - ℹ Censys - Scanner 🕵
+🐾 - ℹ ONYPHE 🇫🇷 - Cyber Defense Search Engine - Scanner 🕵
+🐾 - ℹ Palo Alto - Scanner 🕵 - 📧 scaninfo[AT]paloaltonetworks.com
+🐾 - 🚨 Network 🕵 scan 🎩 MASSCAN 👨‍💻
+🐾 - 🚨 Network 🕵 scan 🎩 NMAP 👨‍💻
+🐾 - 🚨 Network 🕵 scan 🎩 Nuclei 👨‍💻
+🐾 - 🚨 Outgoing connection ↗ 🎛 possible ♞ Emotet C2
+🐾 - 🚨 RDP Connection 🦸 Administrator Account
+SSLBL: Malicious JA3 SSL-Client Fingerprint detected (TrickBot)
+🐾 - 🚨 SSLV2 💔 connection observerd
+🐾 - 🚨 SSLV3 💔 connection observerd
+SURICATA Applayer Wrong direction first Data
+SURICATA HTTP missing Host header
+SURICATA SMB malformed request dialects
+SURICATA STREAM 3way handshake right seq wrong ack evasion
+SURICATA STREAM excessive retransmissions
+SURICATA STREAM Packet with invalid ack
+SURICATA STREAM Packet with invalid timestamp
+SURICATA STREAM SHUTDOWN RST invalid ack
+🐾 - 🚨 Suspicious 👀 FTP trafic on unusual FTP port
+🐾 - 🚨 Suspicious 👀 HTTP trafic on unusual HTTP port
+🔔 Suspicious outgoing LDAP flow to Internet - Leak 🚱 - Or Possible Log4shell attack
+🐾 - 🚨 Suspicious 👀 SSH trafic on unusual SSH port
+🐾 - 🚨 TLS1.0 💔 connection observerd
+🐾 - 🔒 TLS connection to (sni) 🏳️‍🌈 .gay extension observed
